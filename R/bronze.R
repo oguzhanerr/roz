@@ -3,7 +3,7 @@ if (!requireNamespace("readr", quietly = TRUE)) {
   stop("The readr package is required but is not installed. Please install it using install.packages('readr').")
 }
 
-#' Function that reads (or lists examples) the csv files and transforms to a dataframe
+#' Read or list the CSV files
 #'
 #' @param path Character. The name of the file to read from the extdata directory of the roz package. If NULL, lists all example files.
 #'
@@ -26,19 +26,53 @@ read_example <- function(path = NULL) {
   }
 }
 
-#' Function to read a CSV file and transform it into a data frame
+#' Function to validate data types of data frame columns
+#'
+#' @param df Data frame. The data frame to validate.
+#'
+#' @return TRUE if all columns match the expected data types, otherwise an error message.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(poi_name = "A", poi_subtype = "school", latitude = 34.05, longitude = -118.24,
+#'                  is_connected = TRUE, has_electricity = TRUE)
+#' validate_data_types(df)
+validate_data_types <- function(df) {
+  for (col in names(expected_types)) {
+    expected_info <- expected_types[[col]]
+    if (is.list(expected_info)) {
+      expected_type <- expected_info$type
+      expected_values <- expected_info$values
+    } else {
+      expected_type <- expected_info
+      expected_values <- NULL
+    }
+    actual_type <- class(df[[col]])[1]
+    if (actual_type != expected_type) {
+      stop("Column '", col, "' is expected to be of type '", expected_type, "' but is of type '", actual_type, "'.")
+    }
+    if (!is.null(expected_values) && !all(df[[col]] %in% expected_values)) {
+      invalid_values <- unique(df[[col]][!df[[col]] %in% expected_values])
+      stop("Column '", col, "' contains invalid values: ", paste(invalid_values, collapse = ", "))
+    }
+  }
+  return(TRUE)
+}
+
+#' Function to read a CSV file, transform it into a data frame, and validate columns and data types
 #'
 #' @param file_path Character. The path to the CSV file to be read.
-#' @param expected_columns Character vector. The expected column names in the data frame.
 #'
-#' @return A data frame if the columns match the expected ones, otherwise an error message.
+#' @return A data frame with only the expected columns if they match, otherwise an error message.
 #' @export
 #'
 #' @examples
 #' file_path <- read_example("raw_data.csv")
-#' expected_columns <- c("poi_name", "poi_subtype", "latitude", "longitude", "is_connected", "has_electricity")
-#' transform_csv_to_df(file_path, expected_columns)
-transform_csv_to_df <- function(file_path, expected_columns) {
+#' df <- transform_csv_to_df(file_path)
+transform_csv_to_df <- function(file_path) {
+  expected_columns <- roz:::expected_columns
+  expected_types <- roz:::expected_types
+
   # Read the CSV file into a data frame
   df <- readr::read_csv(file_path)
 
@@ -51,6 +85,9 @@ transform_csv_to_df <- function(file_path, expected_columns) {
 
   # Select only the expected columns and drop any unnecessary columns
   df <- df[, expected_columns, drop = FALSE]
+
+  # Validate data types using the separate function
+  validate_data_types(df)
 
   # Return the data frame
   return(df)
