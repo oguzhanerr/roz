@@ -1,4 +1,4 @@
 poi_name,poi_subtype,latitude,longitude,is_connected,has_electricity
 POI A,school,34.0522,-118.2437,True,True
-POI B,health_site,36.7783,-119.4179,False,True
-POI C,postal_office,40.7128,-74.006,True,False
+POI B,hospital,36.7783,-119.4179,False,True
+POI C,post office,40.7128,-74.006,True,False

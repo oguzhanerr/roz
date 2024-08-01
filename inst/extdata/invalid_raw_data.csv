@@ -1,0 +1,4 @@
+poi_name,poi_subtype,latitude,longitude,is_connected,has_electricity
+POI A,school,34.0522,-118.2437,True,True
+POI B,hospital,36.7783,-119.4179,False,invalid_boolean
+POI C,invalid_subtype,invalid_latitude,-74.006,invalid_boolean,False
