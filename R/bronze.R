@@ -16,12 +16,16 @@ if (!requireNamespace("readr", quietly = TRUE)) {
 #' read_example("raw_data.csv")
 read_example <- function(path = NULL) {
   if (is.null(path)) {
-    return(dir(system.file("extdata", package = "roz")))
+    message("Listing example files...")
+    example_files <- dir(system.file("extdata", package = "roz"))
+    message("Example files found: ", paste(example_files, collapse = ", "))
+    return(example_files)
   } else {
     file_path <- system.file("extdata", path, package = "roz", mustWork = TRUE)
     if (file_path == "") {
       stop("File not found: ", path)
     }
+    message("File path resolved: ", file_path)
     return(file_path)
   }
 }
@@ -38,6 +42,7 @@ read_example <- function(path = NULL) {
 #'                  is_connected = TRUE, has_electricity = TRUE)
 #' validate_data_types(df)
 validate_data_types <- function(df) {
+  all_checks_passed <- TRUE
   for (col in names(expected_types)) {
     expected_info <- expected_types[[col]]
     if (is.list(expected_info)) {
@@ -49,12 +54,19 @@ validate_data_types <- function(df) {
     }
     actual_type <- class(df[[col]])[1]
     if (actual_type != expected_type) {
-      stop("Column '", col, "' is expected to be of type '", expected_type, "' but is of type '", actual_type, "'.")
+      message("Type mismatch in column '", col, "': expected '", expected_type, "', got '", actual_type, "'.")
+      all_checks_passed <- FALSE
     }
     if (!is.null(expected_values) && !all(df[[col]] %in% expected_values)) {
       invalid_values <- unique(df[[col]][!df[[col]] %in% expected_values])
-      stop("Column '", col, "' contains invalid values: ", paste(invalid_values, collapse = ", "))
+      message("Invalid values in column '", col, "': ", paste(invalid_values, collapse = ", "), ".")
+      all_checks_passed <- FALSE
     }
+  }
+  if (all_checks_passed) {
+    message("All data types are correct and valid.")
+  } else {
+    stop("Data type validation failed.")
   }
   return(TRUE)
 }
@@ -74,7 +86,9 @@ transform_csv_to_df <- function(file_path) {
   expected_types <- roz:::expected_types
 
   # Read the CSV file into a data frame
+  message("Reading CSV file: ", file_path)
   df <- readr::read_csv(file_path)
+  message("CSV file read successfully.")
 
   # Check if the columns in the data frame match the expected columns
   actual_columns <- colnames(df)
@@ -82,13 +96,16 @@ transform_csv_to_df <- function(file_path) {
     missing_columns <- setdiff(expected_columns, actual_columns)
     stop("The following expected columns are missing: ", paste(missing_columns, collapse = ", "))
   }
+  message("All expected columns are present.")
 
   # Select only the expected columns and drop any unnecessary columns
   df <- df[, expected_columns, drop = FALSE]
+  message("Unnecessary columns dropped. Data frame now contains only the expected columns.")
 
   # Validate data types using the separate function
   validate_data_types(df)
 
   # Return the data frame
+  message("Data frame validation successful.")
   return(df)
 }
