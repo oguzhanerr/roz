@@ -1,10 +1,16 @@
 Package: roz
-Title: What the Package Does (One Line, Title Case)
+Title: R etl pipeline
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Oguzhan", "Er", , "oguzhanerr@gmail.com", role = c("aut", "cre"))
+Description: Does a basic etl pipeline. Convenience functions to make some common tasks with string
+    manipulation and regular expressions a bit easier.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    stringr
