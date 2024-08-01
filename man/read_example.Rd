@@ -2,7 +2,7 @@
 % Please edit documentation in R/bronze.R
 \name{read_example}
 \alias{read_example}
-\title{Function that reads (or lists examples) the csv files and transforms to a dataframe}
+\title{Read or list the CSV files}
 \usage{
 read_example(path = NULL)
 }
@@ -13,7 +13,7 @@ read_example(path = NULL)
 If the path is NULL, returns a character vector of the names of example files. If the path is specified, returns the full path to the specified example file.
 }
 \description{
-Function that reads (or lists examples) the csv files and transforms to a dataframe
+Read or list the CSV files
 }
 \examples{
 read_example()

@@ -2,23 +2,20 @@
 % Please edit documentation in R/bronze.R
 \name{transform_csv_to_df}
 \alias{transform_csv_to_df}
-\title{Function to read a CSV file and transform it into a data frame}
+\title{Function to read a CSV file, transform it into a data frame, and validate columns and data types}
 \usage{
-transform_csv_to_df(file_path, expected_columns)
+transform_csv_to_df(file_path)
 }
 \arguments{
 \item{file_path}{Character. The path to the CSV file to be read.}
-
-\item{expected_columns}{Character vector. The expected column names in the data frame.}
 }
 \value{
-A data frame if the columns match the expected ones, otherwise an error message.
+A data frame with only the expected columns if they match, otherwise an error message.
 }
 \description{
-Function to read a CSV file and transform it into a data frame
+Function to read a CSV file, transform it into a data frame, and validate columns and data types
 }
 \examples{
 file_path <- read_example("raw_data.csv")
-expected_columns <- c("poi_name", "poi_subtype", "latitude", "longitude", "is_connected", "has_electricity")
-transform_csv_to_df(file_path, expected_columns)
+df <- transform_csv_to_df(file_path)
 }
