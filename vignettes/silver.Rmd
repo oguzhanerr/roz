@@ -1,0 +1,79 @@
+---
+title: "Roz Tutorial Part II"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Roz Tutorial Part II}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r check-title, echo=FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE) 
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This vignette demonstrates how to use the `roz` package to add a UUID column, update electricity connectivity, check for issues, verify boundaries, and create a map.
+
+## Step 1: Add UUID column to make the records unique
+
+First, we add a UUID column to the data frame:
+
+```{r add-uuid, echo=TRUE}
+library(roz)
+file_path <- read_example("silver_example.csv")
+df <- readr::read_csv(file_path)
+df <- add_uuid(df)
+head(df)
+```
+
+## Step 2: Make has_electricity TRUE if it was NULL and is_connected is TRUE
+
+Next, we update the `has_electricity` column:
+
+```{r update-electricity, echo=TRUE}
+df <- update_electricity(df)
+head(df)
+```
+
+## Step 3: Check has_electricity FALSE and is_connected TRUE cases
+
+We check for cases where `has_electricity` is FALSE and `is_connected` is TRUE:
+
+```{r check-electricity-connectivity, echo=TRUE}
+problem_cases <- check_electricity_connectivity(df)
+print(problem_cases)
+```
+
+## Step 4: Check if the POIs are within the country boundary
+
+We check if the POIs are within the country boundary:
+
+```{r check-boundaries, echo=TRUE}
+library(rnaturalearth)
+library(sf)
+
+country_boundaries <- sf::st_as_sf(rnaturalearth::ne_countries(scale = "medium", returnclass = "sf"))
+outside_pois <- check_pois_within_boundaries(df, country_boundaries)
+print(outside_pois)
+```
+
+## Step 5: Create a leaflet map showing all POIs
+
+Finally, we create a leaflet map showing all POIs with layers for within and outside the country:
+
+```{r create-poi-map, echo=TRUE}
+map <- create_poi_map(df, country_boundaries)
+map
+```
+
+# Conclusion
+
+In this vignette, we demonstrated how to add a UUID column, update electricity connectivity, check for issues, verify boundaries, and create a map using the `roz` package.
