@@ -86,7 +86,12 @@ check_pois_within_boundaries <- function(df, country_boundaries) {
   poi_sf <- sf::st_as_sf(df, coords = c("longitude", "latitude"), crs = 4326)
   within_country <- sf::st_within(poi_sf, country_boundaries)
   outside_pois <- df[lengths(within_country) == 0, ]
-  return(outside_pois)
+
+  if (nrow(outside_pois) == 0) {
+    message("All points of interest are within the country!")
+  } else {
+    return(outside_pois)
+  }
 }
 
 #' Create a leaflet map showing all POIs with layers for within and outside the country
