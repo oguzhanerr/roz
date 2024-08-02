@@ -1,0 +1,23 @@
+poi_name,poi_subtype,latitude,longitude,is_connected,has_electricity
+ceg goumori,school,11.1861,2.30653,FALSE,FALSE
+ceg soroko,school,11.33573,2.37293,FALSE,FALSE
+epp/soumabougou,school,11.4075781,2.6533926,TRUE,TRUE
+founougo/b,school,11.4725047,2.5316883,NA,TRUE
+epp/sissou,school,11.6074187,2.4951366,TRUE,TRUE
+epp/ gougnirou,school,11.4501578,2.4605182,TRUE,TRUE
+ceg bouanri,post office,10.19191,2.88212,FALSE,TRUE
+epp gando /a,post office,10.197695,2.6540067,NA,TRUE
+wanrarou b,post office,10.2023287,2.6758698,NA,TRUE
+ceg bembereke,post office,10.22144,2.66989,FALSE,TRUE
+epp paparapanga,post office,9.5924723,1.7901761,NA,TRUE
+ceg donga,post office,9.71459,1.95018,TRUE,FALSE
+epp baparapei b,post office,9.7101339,1.6741601,NA,TRUE
+epp baparapei d,post office,9.7103725,1.6738144,TRUE,TRUE
+epp batoulou c,post office,9.7162423,1.6728805,TRUE,FALSE
+batoulou a_b_c_d,post office,9.7165905,1.6728805,TRUE,TRUE
+em tan,hospital,7.2743134,2.3710327,NA,FALSE
+epp oke ore,hospital,7.1909529,2.5086303,NA,TRUE
+epp aye touro,hospital,7.1909529,2.5086303,NA,TRUE
+epp vissoh,hospital,7.1909529,2.5086303,TRUE,TRUE
+ceg kpedekpo,hospital,7.2451,2.49618,FALSE,TRUE
+epp agonve/a,hospital,7.2539467,2.4688712,TRUE,TRUE
