@@ -5,17 +5,26 @@
 \title{Function to validate data types of data frame columns}
 \usage{
 validate_data_types(df)
+
+validate_data_types(df)
 }
 \arguments{
 \item{df}{Data frame. The data frame to validate.}
 }
 \value{
 TRUE if all columns match the expected data types, otherwise an error message.
+
+TRUE if all columns match the expected data types, otherwise an error message.
 }
 \description{
 Function to validate data types of data frame columns
+
+Function to validate data types of data frame columns
 }
 \examples{
+df <- data.frame(poi_name = "A", poi_subtype = "school", latitude = 34.05, longitude = -118.24,
+                 is_connected = TRUE, has_electricity = TRUE)
+validate_data_types(df)
 df <- data.frame(poi_name = "A", poi_subtype = "school", latitude = 34.05, longitude = -118.24,
                  is_connected = TRUE, has_electricity = TRUE)
 validate_data_types(df)
